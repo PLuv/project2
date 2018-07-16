@@ -99,3 +99,21 @@ html, body {
         padding-left: 15px;
     }
 }
+
+// Footer container
+#footer_container {
+   position: fixed;
+   bottom: 5%;
+   width: 70%;
+   margin-left: 2%;
+   margin-right: 5%;
+   padding-left: 10px;
+   font-size: 18px;
+   font: $font-faves;
+   background-color: white;
+   color: black;
+   text-align: left;
+   border: 2px solid grey;
+   border-radius: 10px;
+   height: 25px;
+}
