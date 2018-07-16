@@ -81,6 +81,23 @@ html, body {
     padding: 5px;
     padding-left: 15px; }
 
+#message_container {
+  margin: 1%;
+  padding: 1%; }
+
+.user_info {
+  font-size: 14px;
+  padding-left: 2%;
+  font-weight: bold;
+  margin-bottom: 0; }
+
+.message {
+  font-size: 14px;
+  padding-left: 3%; }
+
+.message_box {
+  width: 97%; }
+
 #footer_container {
   position: fixed;
   bottom: 5%;
