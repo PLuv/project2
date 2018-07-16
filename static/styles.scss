@@ -2,9 +2,16 @@
 $font-serif: Georgia, Times New Roman, serif;
 $font-faves: Verdana, Arial, Helvetica, sans-serif;
 
+html, body {
+    height: 95%;
+    margin: 0;
+}
+
 .container-fluid {
     padding: 1px;
+    height: 100%;
 }
+
 // Header Styles.
 /* Style the header with a grey background and some padding */
 .header {
@@ -35,6 +42,9 @@ $font-faves: Verdana, Arial, Helvetica, sans-serif;
 .header-right {
   float: right;
 }
+.header-right a:hover {
+  background-color: #cc7a00;
+}
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
@@ -46,4 +56,46 @@ $font-faves: Verdana, Arial, Helvetica, sans-serif;
   .header-right {
     float: none;
   }
+}
+
+// Left column attributes.
+.col-sm-11 {
+    margin-left: 0;
+    padding-left: 0;
+}
+.col-sm-1 {
+    background-color: #800040;
+    margin-right: 0;
+    padding-right: 0;
+}
+#upper-left {
+    font: $font-serif;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff;
+    border-right: 2px solid black;
+    border-bottom: 2px dashed black;
+    padding: 5px;
+}
+#upper-left p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#second_row {
+    height: 100%;
+    #sidebar {
+        padding: 5px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 15px;
+    }
+    #chat_channel {
+        padding: 5px;
+        padding-left: 15px;
+    }
 }
