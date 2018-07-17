@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Check if username exists on localStorage.
-    if (localStorage.getItem("username") === null) {
+    if (!localStorage.getItem("username")) {
         document.querySelector('#modal_1').style.display = "block";
 
         // Read form username.
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // initialize new request
             const request = new XMLHttpRequest();
             const new_user = document.querySelector('#user_name').value;
-            console.log(new_user);
 
             // open request
             request.open('POST', '/check_in');
@@ -22,14 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // update the result div
                 if (data.success) {
-                    const contents = `You are now logged in as ${data.rate} ${new_user}!`
-                    document.querySelector('#result').innerHTML = contents;
                     console.log("Success recieved");
+                    document.querySelector('#modal_1').style.display = 'none';
+                    document.querySelector('#entry').style.display = 'none';
+                    // get gate string from server
+                    alert(`"Welcome ${data.name}"`);
+                    second_function(data);
                 }
                 else {
                     document.querySelector('#result').innerHTML = 'There was an error logging you in.';
                 }
-            }
+            };
 
             // Add data to send with request
             const data = new FormData();
@@ -44,3 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //End of file
 });
+
+function second_function (data) {
+    console.log(data.key[0]);
+    var new_html = '';
+    for (i = 0; i < 38; i++) {
+        tmp = data.key[i];
+        new_html = new_html.concat(tmp);
+        //document.querySelector('#gate').innerHTML = tmp;
+    }
+    document.querySelector('#gate').innerHTML = new_html;
+    console.log("Here in second_function.");
+    console.log("done opening gate.");
+}

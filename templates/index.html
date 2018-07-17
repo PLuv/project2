@@ -24,50 +24,22 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Channels Column top-row -->
-                <div class="col-sm-1" id="upper-left">
-                    <p>Speak</p>
-                </div>
-                <div class="col-sm-11">
-                    <!-- Header -->
-                    <div class="header">
-                      <a id="logo"><img src="/static/pics/favicon-32.png" alt="~Speak~"> #'Channel Name'</a>
-                      <div class="header-right">
-                        <a>place</a>
-                        <a>place2</a>
-                      </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Begin Second Row -->
-            <div class="row" id="second_row">
-                <div class="col-sm-1" id="sidebar">
-                    Channels list
-                </div>
-
-                <!-- Begin Chat Channel Box -->
-                <div class="col-sm-11" id="chat_channel">
-                    <div id="message_container">
-
-                        <!-- Repeatable message containers -->
-                        <div class="row">
-                            <div class="message_box">
-                                <div class="user_info"><p class="user_info">Name timestamp</p></div>
-                                <div class="message"><p class="message">Messages inserted here.  Messages inserted here. Messages inserted here.</p></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Footer message insert form -->
-                    <div id="footer_container">
-                        Test info in footer
-                    </div>
+        <div id="entry"><h2>It appears you are a new user.  Please create a username to be granted access to Speak.</h2></div>
+        <!-- The login Modal -->
+        <div id="modal_1" class="w3-modal">
+            <div class="w3-modal-content">
+                <header class="w3-container w3-teal">
+                    <h2>Enter Username</h2>
+                </header>
+                <div>
+                    <form id="form1">
+                        <input id="user_name" autocomplete="off" autofocus placeholder="Enter UserName" type="text">
+                        <input type="submit" value="Create User">
+                    </form>
                 </div>
             </div>
         </div>
+        <div id="gate" class="container-fluid"></div>
 
     </body>
 </html>

@@ -1,4 +1,5 @@
 import requests, os
+from holder import gate
 
 #flask import session is client side session.
 from flask import Flask, session, render_template, request, jsonify
@@ -28,13 +29,15 @@ channel_list = ['general']
 
 @app.route("/")
 def index():
-    return render_template("test2.html")
+    return render_template("index.html")
 
 @app.route("/check_in", methods=["POST"])
 def check_in():
 
     new_user = request.form.get("new_user")
     data = new_user
-    print(data)
+    message = 'Hello There!'
+    gate_key = gate()
+    print(gate_key)
 
-    return jsonify({"success": True, "rate": data})
+    return jsonify({"success": True, "name": data, "message": message, "key": gate_key})
