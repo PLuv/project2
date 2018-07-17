@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Check if username exists on localStorage.
-    if (!localStorage.getItem("username")) {
+    if (!localStorage.getItem('username')) {
         document.querySelector('#modal_1').style.display = "block";
 
         // Read form username.
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // initialize new request
             const request = new XMLHttpRequest();
-            const new_user = document.querySelector('#user_name').value;
+            const user_name = document.querySelector('#user_name').value;
 
             // open request
             request.open('POST', '/check_in');
@@ -19,36 +19,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Extract JSON data from request
                 const data = JSON.parse(request.responseText);
 
-                // update the result div
+                // update
                 if (data.success) {
                     console.log("Success recieved");
                     document.querySelector('#modal_1').style.display = 'none';
                     document.querySelector('#entry').style.display = 'none';
-                    // get gate string from server
+                    // Set new user's username in local storage.
+
+                    // Welcom new user, send data to gate function.
                     alert(`"Welcome ${data.name}"`);
-                    second_function(data);
+                    gate_function(data);
                 }
                 else {
-                    document.querySelector('#result').innerHTML = 'There was an error logging you in.';
+                    console.log("Username exists error.");
+                    document.querySelector('#problem').style.display = 'block';
+                    document.querySelector('#reason').innerHTML = `"Error: UserName ${data.name} already exists"`;
                 }
             };
 
             // Add data to send with request
             const data = new FormData();
-            data.append('new_user', new_user);
+            data.append('user_name', user_name);
 
             // Send request
             request.send(data);
             return false;
         };
+    }
+    else {
+        const user_name = localStorage.getItem('username');
+        // initialize new request
+        const request = new XMLHttpRequest();
+        // open request
+        request.open('POST', '/check_in');
 
+        // Callback function for when request completes.
+        request.onload = () => {
+
+            // Extract JSON data from request
+            const data = JSON.parse(request.responseText);
+
+            // check recieved data.
+            if (data.success) {
+                console.log("Success recieved");
+                alert(`"Welcome back ${data.name}"`);
+                gate_function(data);
+            }
+            else {
+                document.querySelector('#problem').style.display = 'block';
+                document.querySelector('#reason').innerHTML = `Error retrieving data.`;
+            }
+        };
+
+        // Add data to send with request
+        const data = new FormData();
+        data.append('user_name', user_name);
+
+        // Send request
+        request.send(data);
+        return false;
     }
 
 //End of file
 });
 
-function second_function (data) {
-    console.log(data.key[0]);
+function gate_function (data) {
+    document.querySelector('#problem').style.display = 'none';
     var new_html = '';
     for (i = 0; i < 38; i++) {
         tmp = data.key[i];
@@ -56,6 +92,5 @@ function second_function (data) {
         //document.querySelector('#gate').innerHTML = tmp;
     }
     document.querySelector('#gate').innerHTML = new_html;
-    console.log("Here in second_function.");
     console.log("done opening gate.");
 }

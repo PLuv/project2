@@ -36,5 +36,5 @@ def gate():
     "34": 'Test info in footer',\
     "35": '</div>',\
     "36": '</div>',\
-    "37": '</div>}'}
+    "37": '</div>'}
     return a

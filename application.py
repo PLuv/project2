@@ -26,6 +26,7 @@ socketio = SocketIO(app)
 
 # list of all channels
 channel_list = ['general']
+user_list = []
 
 @app.route("/")
 def index():
@@ -34,10 +35,14 @@ def index():
 @app.route("/check_in", methods=["POST"])
 def check_in():
 
-    new_user = request.form.get("new_user")
-    data = new_user
-    message = 'Hello There!'
-    gate_key = gate()
-    print(gate_key)
+    data = request.form.get("user_name").capitalize()
+    # Check if username already taken.
 
-    return jsonify({"success": True, "name": data, "message": message, "key": gate_key})
+    if data in user_list:
+        return jsonify({"success": False, "name": data})
+    else:
+        user_list.append(data)
+        gate_key = gate()
+        print(data)
+        print(user_list)
+        return jsonify({"success": True, "name": data, "key": gate_key})

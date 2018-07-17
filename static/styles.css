@@ -138,4 +138,13 @@ html, body {
 #form1 {
   padding-bottom: 25px; }
 
+#reason {
+  font-size: 30px;
+  color: red;
+  text-align: center;
+  margin-top: 0; }
+
+#problem {
+  display: none; }
+
 /*# sourceMappingURL=styles.css.map */
