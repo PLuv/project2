@@ -34,15 +34,22 @@ def index():
 
 @app.route("/check_in", methods=["POST"])
 def check_in():
+    """Check in user"""
+    data = ''
 
-    data = request.form.get("user_name").capitalize()
-    # Check if username already taken.
+    # See if this is from storage or new.
+    if not request.form.get("from_storage"):
+        data = request.form.get("user_name").capitalize()
 
-    if data in user_list:
-        return jsonify({"success": False, "name": data})
+        # Check if username already exists.
+        if data in user_list:
+            return jsonify({"success": False, "name": data})
+        else:
+            user_list.append(data)
     else:
-        user_list.append(data)
-        gate_key = gate()
-        print(data)
-        print(user_list)
-        return jsonify({"success": True, "name": data, "key": gate_key})
+        data = request.form.get("from_storage").capitalize()
+
+    gate_key = gate()
+    print(data)
+    print(user_list)
+    return jsonify({"success": True, "name": data, "key": gate_key})
