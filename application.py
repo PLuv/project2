@@ -25,7 +25,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 # list of all channels
-channel_list = ['general']
+channel_list = ['General']
 user_list = []
 
 @app.route("/")
@@ -48,8 +48,33 @@ def check_in():
             user_list.append(data)
     else:
         data = request.form.get("from_storage").capitalize()
+        if data not in user_list:
+            user_list.append(data)
 
     gate_key = gate()
-    print(data)
     print(user_list)
     return jsonify({"success": True, "name": data, "key": gate_key})
+
+
+@app.route("/channels", methods=["GET", "POST"])
+def channels():
+    """Channel Management"""
+    if request.method == "POST":
+
+        # Ensure message came through.
+        if not request.form.get("channel_name"):
+            return jsonify({"success": False})
+
+        # Get new channel, make sure channel name does not already exist.
+        channel_name = request.form.get("channel_name").capitalize()
+
+        if channel_name in channel_list:
+            return jsonify({"success": False, "channel_name": channel_name})
+
+        channel_list.append(channel_name)
+        print(channel_list)
+        return jsonify({"success": True, "channel_name": channel_name})
+
+    #else:
+        #TODO
+

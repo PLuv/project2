@@ -39,8 +39,25 @@
                 </div>
             </div>
         </div>
+        <!-- problem div -->
         <div id="problem"><p id="reason"></p></div>
+        <!-- gate -->
         <div id="gate" class="container-fluid"></div>
+
+        <!-- The create channel Modal -->
+        <div id="modal_2" class="w3-modal">
+            <div class="w3-modal-content">
+                <header class="w3-container w3-teal">
+                    <h2>New Channel Creator</h2>
+                </header>
+                <div>
+                    <form id="form2">
+                        <input id="channel_name" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text" maxlength="25">
+                    </form>
+                    <input type="submit" form="form2" value="Create Channel"><span>  </span><input id="cancel_create" type="button" value="cancel create">
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>

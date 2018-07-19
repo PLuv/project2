@@ -106,7 +106,7 @@ function create_channel() {
         document.querySelector('#modal_2').style.display = "block";
 
         // Read form create channel (form2)
-        document.querySelector('form2').onsubmit = () => {
+        document.querySelector('#form2').onsubmit = () => {
             // initialize new request
             const request = new XMLHttpRequest();
             const channel_name = document.querySelector('#channel_name').value;
