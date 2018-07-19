@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else {
                     console.log("Username exists error.");
                     document.querySelector('#problem').style.display = 'block';
-                    document.querySelector('#reason').innerHTML = `"Error: UserName ${data.name} already exists"`;
+                    alert(`"Error: UserName ${data.name} already exists"`);
                 }
             };
 
@@ -122,15 +122,20 @@ function create_channel() {
                 // check recieved data and issue new channel to user.
                 if (channel.success) {
                     console.log("successful channel creation");
+                    document.querySelector('#modal_2').style.display = "none";
                     alert(`"You've successfully created a new channel: ${channel.channel_name}"`);
+                    document.querySelector('#form2').reset();
                 }
                 else {
                     if (channel.channel_name) {
-                        document.querySelector('#problem').style.display = 'block';
-                        document.querySelector('#reason').innerHTML = `"The name ${channel.channel_name} is already in use."`;
+                        console.log("Channel exists error");
+                        alert(`"The name ${channel.channel_name} is already in use."`);
+                        document.querySelector('#form2').reset();
                     }
                     else {
+                        document.querySelector('#modal_2').style.display = "none";
                         document.querySelector('#problem').style.display = 'block';
+                        document.querySelector('#form2').reset();
                         document.querySelector('#reason').innerHTML = `Error creating channel, reload app and try again.`;
                     }
                 }
@@ -143,6 +148,7 @@ function create_channel() {
         };
     };
     document.querySelector('#cancel_create').onclick = () => {
+        document.querySelector('#form2').reset();
         document.querySelector('#modal_2').style.display = 'none';
     };
 }
