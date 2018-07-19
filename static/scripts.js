@@ -1,3 +1,4 @@
+// check in functions.
 document.addEventListener('DOMContentLoaded', () => {
     // Check if username exists on localStorage.
     if (!localStorage.getItem('username')) {
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Welcom new user, send data to gate function.
                     alert(`"Welcome ${data.name}"`);
                     gate_function(data);
+                    create_channel();
                 }
                 else {
                     console.log("Username exists error.");
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Success recieved");
                 alert(`"Welcome back ${data.name}"`);
                 gate_function(data);
+                create_channel();
             }
             else {
                 document.querySelector('#problem').style.display = 'block';
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Add data to send with request
+        // Package and send request
         const data = new FormData();
         data.append('from_storage', user_name);
 
@@ -94,4 +97,52 @@ function gate_function (data) {
     }
     document.querySelector('#gate').innerHTML = new_html;
     console.log("done opening gate.");
+    document.querySelector('#logged_in_user').innerHTML = data.name;
+}
+
+// Add channel function
+function create_channel() {
+    document.querySelector('#create_channel').onclick = () => {
+        document.querySelector('#modal_2').style.display = "block";
+
+        // Read form create channel (form2)
+        document.querySelector('form2').onsubmit = () => {
+            // initialize new request
+            const request = new XMLHttpRequest();
+            const channel_name = document.querySelector('#channel_name').value;
+
+            // open request
+            request.open('POST', '/channels');
+
+            // Callback function for when request complete
+            request.onload = () => {
+                // Extract JSON recieved
+                const channel = JSON.parse(request.responseText);
+
+                // check recieved data and issue new channel to user.
+                if (channel.success) {
+                    console.log("successful channel creation");
+                    alert(`"You've successfully created a new channel: ${channel.channel_name}"`);
+                }
+                else {
+                    if (channel.channel_name) {
+                        document.querySelector('#problem').style.display = 'block';
+                        document.querySelector('#reason').innerHTML = `"The name ${channel.channel_name} is already in use."`;
+                    }
+                    else {
+                        document.querySelector('#problem').style.display = 'block';
+                        document.querySelector('#reason').innerHTML = `Error creating channel, reload app and try again.`;
+                    }
+                }
+            };
+            // Package and send request
+            const channel = new FormData();
+            channel.append('channel_name', channel_name);
+            request.send(channel);
+            return false;
+        };
+    };
+    document.querySelector('#cancel_create').onclick = () => {
+        document.querySelector('#modal_2').style.display = 'none';
+    };
 }
