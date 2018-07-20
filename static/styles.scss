@@ -42,6 +42,9 @@ html, body {
 .header-right {
   float: right;
 }
+.header-center {
+    padding-left: 50px;
+}
 .header-right a:hover {
   background-color: #cc7a00;
 }
@@ -71,7 +74,7 @@ html, body {
 #upper-left {
     font: $font-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
     text-align: center;
     color: #ffffff;
     border-right: 2px solid black;
@@ -93,11 +96,20 @@ html, body {
         text-align: center;
         color: #ffffff;
         font-size: 15px;
+        text-decoration: underline;
+        font-weight: bold;
+        padding-top: 25px;
     }
     #chat_channel {
         padding: 5px;
         padding-left: 15px;
     }
+}
+
+.channels_div {
+    padding-top: 20px;
+    color: #5FE587;
+    font-size: 15px;
 }
 
 // Message container
@@ -159,7 +171,9 @@ html, body {
     position:relative;
     padding:0;
     outline:0;
-    width:600px
+    width:375px;
+    text-align: center;
+    height: 150px;
 }
 #form1 {
     padding-bottom: 25px;
@@ -173,4 +187,28 @@ html, body {
 }
 #problem {
     display: none;
+}
+
+// input info
+#logged_in_user {
+    font: $font-serif;
+    text-decoration: underline;
+    padding-right: 50px;
+}
+
+#create_channel {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+#create_holder {
+    font: $font-serif;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-decoration: underline;
+}
+
+//create channel modal
+#form2 {
+    @extend #form1;
 }
