@@ -18,7 +18,7 @@ def gate():
     "16": '<!-- Begin Second Row -->',\
     "17": '<div class="row" id="second_row">',\
     "18": '<div class="col-sm-1" id="sidebar">',\
-    "19": 'Channels list',\
+    "19": '<div class="channel_head">Channels list</div><div class="channels_div"><span class="channel_selector"> #Test Channel </span></div>',\
     "20": '</div>',\
     "21": '<!-- Begin Chat Channel Box -->',\
     "22": '<div class="col-sm-11" id="chat_channel">',\
