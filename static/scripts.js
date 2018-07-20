@@ -98,6 +98,9 @@ function gate_function (data) {
     document.querySelector('#gate').innerHTML = new_html;
     console.log("done opening gate.");
     document.querySelector('#logged_in_user').innerHTML = data.name;
+
+    // call display chanel function.
+    display_channels(data);
 }
 
 // Add channel function
@@ -151,4 +154,18 @@ function create_channel() {
         document.querySelector('#form2').reset();
         document.querySelector('#modal_2').style.display = 'none';
     };
+}
+
+// Displays channels to channels_div
+function display_channels(data) {
+    // Current channels upload
+    console.log(data.channel);
+    const template = Handlebars.compile("<div class=\"channel_selector\"><span id=\"{{ value }}\" class=\"channel_item\">{{ value }}</span></div>");
+    const channel_name = data.channel[0];
+
+    console.log(channel_name);
+
+    // add channel to DOM.
+    const content = template({'value': channel_name});
+    document.querySelector('#channels_div').innerHTML += content;
 }
