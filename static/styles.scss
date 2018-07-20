@@ -74,7 +74,6 @@ html, body {
 #upper-left {
     font: $font-serif;
     font-weight: bold;
-    font-size: 24px;
     text-align: center;
     color: #ffffff;
     border-right: 2px solid black;
@@ -82,6 +81,7 @@ html, body {
     padding: 5px;
 }
 #upper-left p {
+    font-size: 27px;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -94,11 +94,6 @@ html, body {
     #sidebar {
         padding: 5px;
         text-align: center;
-        color: #ffffff;
-        font-size: 15px;
-        text-decoration: underline;
-        font-weight: bold;
-        padding-top: 25px;
     }
     #chat_channel {
         padding: 5px;
@@ -106,10 +101,27 @@ html, body {
     }
 }
 
+.channel_head {
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: underline;
+    font-weight: bold;
+    padding-top: 25px;
+}
+
 .channels_div {
     padding-top: 20px;
-    color: #5FE587;
-    font-size: 15px;
+    color: #51DC7B;
+    font-size: 14px;
+
+}
+
+.channel_selector {
+    border: dashed;
+    border-width: 2px;
+    border-color: #C8D4CF;
+    font-weight: 600;
+    white-space: pre;
 }
 
 // Message container
