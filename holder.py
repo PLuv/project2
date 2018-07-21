@@ -38,3 +38,62 @@ def gate():
     "36": '</div>',\
     "37": '</div>'}
     return a
+
+
+class Message:
+    def __init__(self, user, content_time, content):
+        self.user = user
+        self.content_time = content_time
+        self.content = content
+
+
+class Channel:
+    limit = 5
+
+    def __init__(self, name):
+        self.name = name
+        # Keep track of channel's messages.
+        self.messages = []
+
+    # add message method
+    def add(self, m):
+        # set class/channel limit
+        if len(self.messages) >= self.limit:
+            self.messages.pop(0)
+        self.messages.append(m)
+
+    # define channel returner
+    def get_channel(self):
+        return(f"{self.name}")
+
+    # define message data returner
+    def get_message_data(self):
+        message_dict = []
+        for contents in self.messages:
+            message_user = (f"{contents.user}")
+            message_content_time = (f"{contents.content_time}")
+            message_content = (f"{contents.content}")
+            message_dict.append({'user': message_user, 'content_time': message_content_time, 'content': message_content})
+        return (message_dict)
+
+    # define user returner
+    def get_users(self):
+        users = []
+        for a_user in self.messages:
+            users.append(f"{a_user.user}")
+        return (users)
+
+    # define time returner
+    def get_content_time(self):
+        times = []
+        for time in self.messages:
+            times.append(f"{time.content_time}")
+        return(times)
+
+    # define content returner
+    def get_content(self):
+        contents = []
+        for i in self.messages:
+            contents.append(f"{i.content}")
+        return(contents)
+
