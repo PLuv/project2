@@ -14,6 +14,15 @@
 
         <!-- App's JavaScript -->
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+        <!-- Inner html of the handlebars loop for channel lists. -->
+        {% raw -%}
+        <script id="channel_script" type="text/x-handlebars-template">
+        {{#each value}}
+            <div class="channel_selector"><span id="{{ this }}" class="channel_item">{{ this }}</span></div>
+        {{/each}}
+        </script>
+        {%- endraw %}
         <script src="{{url_for('static', filename='scripts.js')}}"></script>
 
         <!-- Add Favicon -->
@@ -39,8 +48,10 @@
                 </div>
             </div>
         </div>
+
         <!-- problem div -->
         <div id="problem"><p id="reason"></p></div>
+
         <!-- gate -->
         <div id="gate" class="container-fluid"></div>
 

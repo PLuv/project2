@@ -109,19 +109,23 @@ html, body {
     padding-top: 25px;
 }
 
-.channels_div {
+#channels_div {
     padding-top: 20px;
     color: #51DC7B;
     font-size: 14px;
-
+    margin-left: none;
 }
 
 .channel_selector {
+    font-weight: 600;
+    white-space: pre;
+    margin-bottom: 10px;
+}
+
+.channel_item {
     border: dashed;
     border-width: 2px;
     border-color: #C8D4CF;
-    font-weight: 600;
-    white-space: pre;
 }
 
 // Message container

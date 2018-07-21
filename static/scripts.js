@@ -159,13 +159,14 @@ function create_channel() {
 // Displays channels to channels_div
 function display_channels(data) {
     // Current channels upload
-    console.log(data.channel);
-    const template = Handlebars.compile("<div class=\"channel_selector\"><span id=\"{{ value }}\" class=\"channel_item\">{{ value }}</span></div>");
-    const channel_name = data.channel[0];
+    const template = Handlebars.compile(document.querySelector('#channel_script').innerHTML);
 
-    console.log(channel_name);
+    const channel_name = [];
+    for (let i = 0; i < data.channel.length; i++) {
+        channel_name.push(data.channel[i]);
+    }
 
-    // add channel to DOM.
+    // Add channel to DOM.
     const content = template({'value': channel_name});
     document.querySelector('#channels_div').innerHTML += content;
 }
