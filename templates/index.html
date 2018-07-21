@@ -19,7 +19,7 @@
         {% raw -%}
         <script id="channel_script" type="text/x-handlebars-template">
         {{#each value}}
-            <div class="channel_selector"><span id="{{ this }}" class="channel_item">{{ this }}</span></div>
+            <div class="channel_selector"><a href="#"><span id="{{ this }}" class="channel_item"> #{{ this }} </span></a></div>
         {{/each}}
         </script>
         {%- endraw %}

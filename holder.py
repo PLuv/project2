@@ -7,7 +7,7 @@ def gate():
     "5": '<div class="col-sm-11">',\
     "6": '<!-- Header -->',\
     "7": '<div class="header">',\
-    "8": '<a id="logo"><img src="/static/pics/favicon-32.png" alt="~Speak~"> #"Channel Name"<span class="header-center"><img src="/static/pics/dot40.png">  </span><span id="logged_in_user"></span><a id="create_channel" class="header-center"><span><img src="/static/pics/add_button40.png"></span><span id="create_holder">Create Channel</span></a></a>',\
+    "8": '<a id="logo"><img src="/static/pics/favicon-32.png" alt="~Speak~"> #"Channel Name"<span class="header-center"><img src="/static/pics/dot40.png">  </span><span id="logged_in_user"></span><a href="#" id="create_channel" class="header-center"><span><img src="/static/pics/add_button40.png"></span><span id="create_holder">Create Channel</span></a></a>',\
     "9": '<div class="header-right">',\
     "10": '<a>place</a>',\
     "11": '<a>place2</a>',\
