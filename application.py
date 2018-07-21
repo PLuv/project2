@@ -25,7 +25,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 # list of all channels
-channel_list = ['General']
+channel_list = ['General', 'Test Channel 1', 'Test Channel 2']
 user_list = []
 
 @app.route("/")
@@ -39,7 +39,7 @@ def check_in():
 
     # See if this is from storage or new.
     if not request.form.get("from_storage"):
-        data = request.form.get("user_name").capitalize()
+        data = request.form.get("user_name").title()
 
         # Check if username already exists.
         if data in user_list:
@@ -47,13 +47,13 @@ def check_in():
         else:
             user_list.append(data)
     else:
-        data = request.form.get("from_storage").capitalize()
+        data = request.form.get("from_storage").title()
         if data not in user_list:
             user_list.append(data)
 
     gate_key = gate()
     print(user_list)
-    return jsonify({"success": True, "name": data, "key": gate_key})
+    return jsonify({"success": True, "name": data, "key": gate_key, "channel": channel_list})
 
 
 @app.route("/channels", methods=["GET", "POST"])
@@ -66,15 +66,15 @@ def channels():
             return jsonify({"success": False})
 
         # Get new channel, make sure channel name does not already exist.
-        channel_name = request.form.get("channel_name").capitalize()
+        channel_name = request.form.get("channel_name").title()
 
         if channel_name in channel_list:
             return jsonify({"success": False, "channel_name": channel_name})
 
         channel_list.append(channel_name)
         print(channel_list)
-        return jsonify({"success": True, "channel_name": channel_name})
+        return jsonify({"success": True, "channel_name": channel_name, "channel": channel_list})
 
-    #else:
-        #TODO
+    else:
+        return jsonify({"success": True, "channel": channel_list})
 

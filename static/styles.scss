@@ -116,10 +116,22 @@ html, body {
     margin-left: none;
 }
 
+#channels_div a {
+    color: #51DC7B !important;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: pre;
+}
+
+#channels_div a:hover {
+    background-color: #F9FFF7;
+    color: #1E42F6 !important;
+}
+
 .channel_selector {
     font-weight: 600;
     white-space: pre;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .channel_item {

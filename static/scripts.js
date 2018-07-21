@@ -30,11 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Welcom new user, send data to gate function.
                     alert(`"Welcome ${data.name}"`);
                     gate_function(data);
-                    create_channel();
                 }
                 else {
                     console.log("Username exists error.");
-                    document.querySelector('#problem').style.display = 'block';
                     alert(`"Error: UserName ${data.name} already exists"`);
                 }
             };
@@ -67,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Success recieved");
                 alert(`"Welcome back ${data.name}"`);
                 gate_function(data);
-                create_channel();
             }
             else {
                 document.querySelector('#problem').style.display = 'block';
@@ -99,8 +96,10 @@ function gate_function (data) {
     console.log("done opening gate.");
     document.querySelector('#logged_in_user').innerHTML = data.name;
 
-    // call display chanel function.
-    display_channels(data);
+    // call chanel functions.
+    create_channel();
+    var from = 0;
+    display_channels(from);
 }
 
 // Add channel function
@@ -128,6 +127,8 @@ function create_channel() {
                     document.querySelector('#modal_2').style.display = "none";
                     alert(`"You've successfully created a new channel: ${channel.channel_name}"`);
                     document.querySelector('#form2').reset();
+                    var from = 1;
+                    display_channels(from);
                 }
                 else {
                     if (channel.channel_name) {
@@ -157,16 +158,42 @@ function create_channel() {
 }
 
 // Displays channels to channels_div
-function display_channels(data) {
-    // Current channels upload
-    const template = Handlebars.compile(document.querySelector('#channel_script').innerHTML);
+function display_channels(from) {
+    // Get channels
+    //open request
+    const request = new XMLHttpRequest();
+    request.open('GET', '/channels');
 
-    const channel_name = [];
-    for (let i = 0; i < data.channel.length; i++) {
-        channel_name.push(data.channel[i]);
-    }
+    // Callback function
+    request.onload = ()=> {
+        const data = JSON.parse(request.responseText);
 
-    // Add channel to DOM.
-    const content = template({'value': channel_name});
-    document.querySelector('#channels_div').innerHTML += content;
+        if (data.success) {
+            // Current channels upload
+            const template = Handlebars.compile(document.querySelector('#channel_script').innerHTML);
+            var channel_name = [];
+            if (from === 0) {
+                for (let i = 0; i < data.channel.length; i++) {
+                channel_name.push(data.channel[i]);
+                }
+            }
+            else {
+                var i = data.channel.length - 1;
+                channel_name.push(data.channel[i]);
+            }
+
+            // Add channel to DOM.
+            const content = template({'value': channel_name});
+            document.querySelector('#channels_div').innerHTML += content;
+
+            // call channel selector functionality.
+        }
+        else {
+            console.log("channel load error");
+            alert("There has been an error loading channels. Please reload program.");
+        }
+    };
+    // Send request
+    request.send();
+    return false;
 }
