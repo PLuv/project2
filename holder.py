@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def gate():
     a = {"0": '<div class="row">',\
     "1": '<!-- Channels Column top-row -->',\
@@ -96,4 +98,9 @@ class Channel:
         for i in self.messages:
             contents.append(f"{i.content}")
         return(contents)
+
+# Eastern time converter function.
+def eastern_time(time):
+    eastern = time.strftime('%I:%M %m-%d-%Y')
+    return (eastern)
 
