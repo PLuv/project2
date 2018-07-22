@@ -185,15 +185,48 @@ function display_channels(from) {
             // Add channel to DOM.
             const content = template({'value': channel_name});
             document.querySelector('#channels_div').innerHTML += content;
-
-            // call channel selector functionality.
         }
         else {
             console.log("channel load error");
             alert("There has been an error loading channels. Please reload program.");
         }
+
+        // call channel selector functionality.
+        channel_selector(data);
     };
     // Send request
     request.send();
     return false;
+}
+
+function channel_selector(data) {
+    var cur_channel;
+    // Check if user has a saved current channel.
+    if (!localStorage.getItem('cur_channel')) {
+        cur_channel = data.channel[0];
+        document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+    }
+    else {
+        cur_channel = localStorage.getItem('cur_channel');
+        document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+    }
+
+    // onclick change channels and update localStorage.
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.onclick = () => {
+            const page = link.dataset.page;
+            load_page(page);
+            return false;
+        };
+    });
+    // Render channel to page.
+    function load_page(page_name) {
+        const request = new XMLHttpRequest();
+        request.open('GET', `/messages/${page_name}`);
+        request.onload = () => {
+            const response = JSON.parse(request.responseText);
+            console.log(response);
+        };
+        request.send();
+    }
 }

@@ -1,5 +1,5 @@
 import requests, os
-from holder import gate
+from holder import *
 
 #flask import session is client side session.
 from flask import Flask, session, render_template, request, jsonify
@@ -24,9 +24,17 @@ Session(app)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-# list of all channels
+# App lists
 channel_list = ['General', 'Test Channel 1', 'Test Channel 2']
 user_list = []
+channel_dict = {}
+
+# Testing
+message_1 = Message(user='Philip', content_time='07-21-18', content='This is my first test message -phil')
+general = Channel(name='General')
+general.add(message_1)
+channel_dict['General'] = general
+
 
 @app.route("/")
 def index():
@@ -73,8 +81,26 @@ def channels():
 
         channel_list.append(channel_name)
         print(channel_list)
+
+        # Make new channel object insert into channel dictionary.
+        channel_dict[channel_name] = Channel(name=channel_name)
+
         return jsonify({"success": True, "channel_name": channel_name, "channel": channel_list})
 
     else:
         return jsonify({"success": True, "channel": channel_list})
+
+
+@app.route("/messages/<string:page_name>", methods=["GET", "POST"])
+def messages(page_name):
+    """Message Management"""
+    if request.method == "POST":
+        print("POSTED to messages route")
+
+
+    else:
+        # Get channel object using page_name.
+        channel_object = channel_dict[page_name]
+        contents = channel_object.get_message_data()
+        return jsonify(contents[0])
 
