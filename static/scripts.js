@@ -223,9 +223,32 @@ function channel_selector(data) {
     function load_page(page_name) {
         const request = new XMLHttpRequest();
         request.open('GET', `/messages/${page_name}`);
+        // define some lists.
+        var user_content_time = [];
+        var message_content = [];
+
         request.onload = () => {
             const response = JSON.parse(request.responseText);
             console.log(response);
+
+            // If not messages in class yet.
+            if (response.success === false) {
+            console.log("channel load error");
+            alert("Channel is currently empty, quick be the first to comment!");
+            }
+
+            // else construct message_container
+            else {
+                // remove message objects from array.
+                response.forEach(response => {
+                    user_content_time.push((response.user + " " + response.content_time));
+                    message_content.push(response.content);
+                });
+
+                const template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
+                // Add messages to DOM.
+                const content = template({})
+            }
         };
         request.send();
     }
