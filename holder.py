@@ -24,21 +24,13 @@ def gate():
     "20": '</div>',\
     "21": '<!-- Begin Chat Channel Box -->',\
     "22": '<div class="col-sm-11" id="chat_channel">',\
-    "23": '<div id="message_container">',\
-    "24": '<!-- Repeatable message containers -->',\
-    "25": '<div class="row">',\
-    "26": '<div class="message_box">',\
-    "27": '<div class="user_info"><p class="user_info">Name timestamp</p></div>',\
-    "28": '<div class="message"><p class="message">Messages inserted here.  Messages inserted here. Messages inserted here.</p></div>',\
-    "29": '</div>',\
-    "30": '</div>',\
-    "31": '</div>',\
-    "32": '<!-- Footer message insert form -->',\
-    "33": '<div id="footer_container">',\
-    "34": 'Test info in footer',\
-    "35": '</div>',\
-    "36": '</div>',\
-    "37": '</div>'}
+    "23": '<div id="message_container"></div>',\
+    "24": '<!-- Footer message insert form -->',\
+    "25": '<div id="footer_container">',\
+    "26": 'Test info in footer',\
+    "27": '</div>',\
+    "28": '</div>',\
+    "29": '</div>'}
     return a
 
 

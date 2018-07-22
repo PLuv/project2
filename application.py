@@ -1,5 +1,6 @@
 import requests, os
 from holder import *
+from time_help import *
 
 #flask import session is client side session.
 from flask import Flask, session, render_template, request, jsonify
@@ -25,14 +26,18 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 # App lists
-channel_list = ['General', 'Test Channel 1', 'Test Channel 2']
+channel_list = ['General']
 user_list = []
 channel_dict = {}
 
 # Testing
 message_1 = Message(user='Philip', content_time='07-21-18', content='This is my first test message -phil')
+message_2 = Message(user='Oliver', content_time='07-22-18', content='And this is my first test message -oliver')
+message_3 = Message(user='Natasha', content_time='07-22-18', content='Hi Guys.  -natasha')
 general = Channel(name='General')
 general.add(message_1)
+general.add(message_2)
+general.add(message_3)
 channel_dict['General'] = general
 
 
@@ -102,5 +107,10 @@ def messages(page_name):
         # Get channel object using page_name.
         channel_object = channel_dict[page_name]
         contents = channel_object.get_message_data()
-        return jsonify(contents[0])
+
+        # check if class is currently empty.
+        if len(contents) < 1:
+            return jsonify({"success": False})
+
+        return jsonify(contents)
 

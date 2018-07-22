@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function gate_function (data) {
     document.querySelector('#problem').style.display = 'none';
     var new_html = '';
-    for (i = 0; i < 38; i++) {
+    for (i = 0; i < 30; i++) {
         tmp = data.key[i];
         new_html = new_html.concat(tmp);
         //document.querySelector('#gate').innerHTML = tmp;
@@ -205,10 +205,12 @@ function channel_selector(data) {
     if (!localStorage.getItem('cur_channel')) {
         cur_channel = data.channel[0];
         document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+        load_page(cur_channel);
     }
     else {
         cur_channel = localStorage.getItem('cur_channel');
         document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+        load_page(cur_channel);
     }
 
     // onclick change channels and update localStorage.
@@ -224,8 +226,6 @@ function channel_selector(data) {
         const request = new XMLHttpRequest();
         request.open('GET', `/messages/${page_name}`);
         // define some lists.
-        var user_content_time = [];
-        var message_content = [];
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
@@ -241,13 +241,13 @@ function channel_selector(data) {
             else {
                 // remove message objects from array.
                 response.forEach(response => {
-                    user_content_time.push((response.user + " " + response.content_time));
-                    message_content.push(response.content);
+                    let user_content_time = (response.user + " ~ " + response.content_time);
+                    let message_content = response.content;
+                    let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
+                    let content = template({'user_content_time': user_content_time, 'message_content': message_content});
+                    document.querySelector('#message_container').innerHTML += content;
                 });
 
-                const template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
-                // Add messages to DOM.
-                const content = template({})
             }
         };
         request.send();

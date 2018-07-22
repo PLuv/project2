@@ -19,8 +19,16 @@
         {% raw -%}
         <script id="channel_script" type="text/x-handlebars-template">
         {{#each value}}
-            <div class="channel_selector"><a href="#"><span id="{{ this }}" class="channel_item"> #{{ this }} </span></a></div>
+            <div class="channel_selector"><a href="#" class="nav-link" data-page="{{ this }}"><span id="{{ this }}" class="channel_item"> #{{ this }} </span></a></div>
         {{/each}}
+        </script>
+        {%- endraw %}
+        <!-- Inner html handlebars loop for message_box -->
+        {% raw -%}
+        <script id="message_script" type="text/x-handlebars-template">
+            <div class="row"><div class="message_box">
+            <div class="user_info"><p class="user_info">{{ user_content_time }}</p></div>
+            <div class="message"><p class="message">{{ message_content }}</p></div></div></div>
         </script>
         {%- endraw %}
         <script src="{{url_for('static', filename='scripts.js')}}"></script>
@@ -63,7 +71,7 @@
                 </header>
                 <div>
                     <form id="form2">
-                        <input id="channel_name" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text" maxlength="25">
+                        <input id="channel_name" autocomplete="off" autofocus placeholder="Enter Channel Name" type="text" maxlength="15">
                     </form>
                     <input type="submit" form="form2" value="Create Channel"><span>  </span><input id="cancel_create" type="button" value="cancel create">
                 </div>
