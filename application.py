@@ -117,5 +117,20 @@ def messages(page_name):
 
 @socketio.on("submit post")
 def post(data):
-    new_content = data["post"]
-    print(new_content)
+    new_content, cur_user, cur_channel = data["post"], data["user"], data["channel"]
+
+
+    # Get time.
+    cur_time = current_time()
+    eastern = eastern_time(cur_time)
+
+    # Create new message object.
+    new_message = Message(user=cur_user, content_time=eastern, content=new_content)
+    cur_channel_obj = channel_dict[cur_channel]
+
+    # Push new message object to channel memory.
+    cur_channel_obj.add(new_message)
+
+    message_package = {"channel": cur_channel, "user": cur_user, "content_time": eastern, "content": new_content}
+    emit("incoming messages", message_package, broadcast=True)
+

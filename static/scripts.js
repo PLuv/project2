@@ -102,6 +102,7 @@ function gate_function (data) {
     var from = 0;
     display_channels(from);
     setTimeout('post_message()', 1500);
+    setTimeout('listen()', 1500);
 }
 
 // Add channel function
@@ -258,6 +259,8 @@ function channel_selector(data) {
 }
 
 function post_message() {
+    const user = localStorage.getItem('username');
+
     // Connect to websocket.
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
@@ -271,11 +274,25 @@ function post_message() {
                 document.querySelector('#message_input').setAttribute('placeholder', "Post must have content to be posted");
             }
             else {
-                socket.emit('submit post', {'post': posted_message});
+                let cur_channel = document.querySelector('#message_container').getAttribute('data-channel');
+                socket.emit('submit post', {'post': posted_message, 'user': user, 'channel': cur_channel});
                 document.querySelector('#message_form').reset();
             }
-        }
-    })
+        };
+    });
+}
+
+// Listen for incoming posts.
+function listen() {
+    // Connect to websocket.
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    socket.on('incoming messages', data => {
+        console.log(data.channel);
+        console.log(data.user);
+        console.log(data.content_time);
+        console.log(data.content);
+    });
 }
 
 function clearout () {
