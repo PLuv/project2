@@ -133,6 +133,7 @@ function create_channel() {
                     document.querySelector('#form2').reset();
                     var from = 1;
                     display_channels(from);
+                    setTimeout(load_page(channel.channel_name, 500));
                 }
                 else {
                     if (channel.channel_name) {
@@ -196,40 +197,42 @@ function display_channels(from) {
         }
 
         // call channel selector functionality.
-        channel_selector(data);
+        channel_selector(data, from);
     };
     // Send request
     request.send();
     return false;
 }
 
-function channel_selector(data) {
+function channel_selector(data, from) {
     var cur_channel;
     // Check if user has a saved current channel.
-    if (!localStorage.getItem('cur_channel')) {
-        cur_channel = data.channel[0];
-        document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
-        load_page(cur_channel);
-    }
-    else {
-        cur_channel = localStorage.getItem('cur_channel');
-        let test = false;
-
-        // Test to see if localStorage cur_channel exists on server.
-        for (var i=0; i<data.channel.length; i++) {
-            if (data.channel[i] == cur_channel) {
-                test = true;
-            }
-        }
-        // if cur_channel exists on server load page, else load general.
-        if (test == true) {
-            //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+    if (from == 0) {
+        if (!localStorage.getItem('cur_channel')) {
+            cur_channel = data.channel[0];
+            document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
             load_page(cur_channel);
         }
         else {
-            cur_channel = data.channel[0];
-            //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
-            load_page(cur_channel);
+            cur_channel = localStorage.getItem('cur_channel');
+            let test = false;
+
+            // Test to see if localStorage cur_channel exists on server.
+            for (var i=0; i<data.channel.length; i++) {
+                if (data.channel[i] == cur_channel) {
+                    test = true;
+                }
+            }
+            // if cur_channel exists on server load page, else load general.
+            if (test == true) {
+                //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+                load_page(cur_channel);
+            }
+            else {
+                cur_channel = data.channel[0];
+                //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+                load_page(cur_channel);
+            }
         }
     }
 
@@ -241,40 +244,43 @@ function channel_selector(data) {
             return false;
         };
     });
-    // Render channel to page.
-    function load_page(page_name) {
-        const request = new XMLHttpRequest();
-        request.open('GET', `/messages/${page_name}`);
-        // clear what was/could be in message_container.
-        clearout();
+}
 
-        request.onload = () => {
-            const response = JSON.parse(request.responseText);
+// Render channel to page.
+function load_page(page_name) {
+    const request = new XMLHttpRequest();
+    request.open('GET', `/messages/${page_name}`);
+    // clear what was/could be in message_container.
+    clearout();
 
-            // If not messages in class yet.
-            if (response.success === false) {
+    request.onload = () => {
+        const response = JSON.parse(request.responseText);
+
+        // If not messages in class yet.
+        if (response.success === false) {
+            document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
+            alert("Channel is currently empty, quick be the first to comment!");
+        }
+
+        // else construct message_container
+        else {
+            // remove message objects from array.
+            console.log(response);
+            var reverse = response.reverse();
+            reverse.forEach(reverse => {
                 document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
-                alert("Channel is currently empty, quick be the first to comment!");
-            }
+                let user_content_time = (reverse.user + " ~ " + reverse.content_time);
+                let message_content = reverse.content;
+                let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
+                let content = template({'user_content_time': user_content_time, 'message_content': message_content});
+                document.querySelector('#message_container').innerHTML += content;
+            });
 
-            // else construct message_container
-            else {
-                // remove message objects from array.
-                response.forEach(response => {
-                    document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
-                    let user_content_time = (response.user + " ~ " + response.content_time);
-                    let message_content = response.content;
-                    let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
-                    let content = template({'user_content_time': user_content_time, 'message_content': message_content});
-                    document.querySelector('#message_container').innerHTML += content;
-                });
-
-            }
-        };
-        document.querySelector('#message_container').setAttribute('data-channel', page_name);
-        localStorage.setItem('cur_channel', page_name);
-        request.send();
-    }
+        }
+    };
+    document.querySelector('#message_container').setAttribute('data-channel', page_name);
+    localStorage.setItem('cur_channel', page_name);
+    request.send();
 }
 
 function post_message() {
@@ -318,7 +324,8 @@ function listen() {
             let message_content = data.content;
             let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
             let new_content = template({'user_content_time': user_content_time, 'message_content': message_content});
-            document.querySelector('#message_container').innerHTML += new_content;
+            // insert before
+            document.querySelector('#message_container').insertAdjacentHTML('afterbegin', new_content);
         }
     });
 }

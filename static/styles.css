@@ -32,6 +32,9 @@ html, body {
 .header-right {
   float: right; }
 
+.header-center {
+  padding-left: 50px; }
+
 .header-right a:hover {
   background-color: #cc7a00; }
 
@@ -54,9 +57,9 @@ html, body {
   padding-right: 0; }
 
 #upper-left {
+  background-color: #541e48;
   font: Georgia, Times New Roman, serif;
   font-weight: bold;
-  font-size: 20px;
   text-align: center;
   color: #ffffff;
   border-right: 2px solid black;
@@ -64,6 +67,7 @@ html, body {
   padding: 5px; }
 
 #upper-left p {
+  font-size: 27px;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -73,17 +77,55 @@ html, body {
 #second_row {
   height: 100%; }
   #second_row #sidebar {
+    background-color: #800040;
     padding: 5px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 15px; }
+    text-align: center; }
   #second_row #chat_channel {
     padding: 5px;
     padding-left: 15px; }
 
+.channel_head {
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: underline;
+  font-weight: bold;
+  padding-top: 25px; }
+
+#channels_div {
+  padding-top: 20px;
+  color: #51DC7B;
+  font-size: 14px;
+  margin-left: none; }
+
+#channels_div a {
+  color: #51DC7B !important;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: pre; }
+
+.channel_item:hover {
+  background-color: #F9FFF7;
+  color: #1E42F6 !important; }
+
+.channel_selector {
+  font-weight: 600;
+  white-space: pre;
+  margin-bottom: 15px; }
+
+.channel_item {
+  border: dashed;
+  border-width: 2px;
+  border-color: #C8D4CF; }
+
 #message_container {
   margin: 1%;
   padding: 1%; }
+
+.scroll {
+  height: 80%;
+  overflow-y: scroll;
+  border: solid grey;
+  border-width: 5px; }
 
 .user_info {
   font-size: 14px;
@@ -104,7 +146,11 @@ html, body {
   width: 70%;
   margin-left: 2%;
   margin-right: 5%;
-  padding-left: 10px;
+  padding-left: 10px; }
+
+.footer_container input {
+  outline: none;
+  width: 700px;
   font-size: 18px;
   font: Verdana, Arial, Helvetica, sans-serif;
   background-color: white;
@@ -112,7 +158,7 @@ html, body {
   text-align: left;
   border: 2px solid grey;
   border-radius: 10px;
-  height: 25px; }
+  height: 35px; }
 
 .w3-modal {
   z-index: 3;
@@ -133,9 +179,11 @@ html, body {
   position: relative;
   padding: 0;
   outline: 0;
-  width: 600px; }
+  width: 375px;
+  text-align: center;
+  height: 150px; }
 
-#form1 {
+#form1, #form2 {
   padding-bottom: 25px; }
 
 #reason {
@@ -146,5 +194,20 @@ html, body {
 
 #problem {
   display: none; }
+
+#logged_in_user {
+  font: Georgia, Times New Roman, serif;
+  text-decoration: underline;
+  padding-right: 50px; }
+
+#create_channel {
+  padding-left: 2px;
+  padding-right: 2px; }
+
+#create_holder {
+  font: Georgia, Times New Roman, serif;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-decoration: underline; }
 
 /*# sourceMappingURL=styles.css.map */

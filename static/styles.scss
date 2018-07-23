@@ -72,6 +72,7 @@ html, body {
     padding-right: 0;
 }
 #upper-left {
+    background-color: #541e48;
     font: $font-serif;
     font-weight: bold;
     text-align: center;
@@ -92,6 +93,7 @@ html, body {
 #second_row {
     height: 100%;
     #sidebar {
+        background-color: #800040;
         padding: 5px;
         text-align: center;
     }
@@ -123,7 +125,7 @@ html, body {
     white-space: pre;
 }
 
-#channels_div a:hover {
+.channel_item:hover{
     background-color: #F9FFF7;
     color: #1E42F6 !important;
 }
@@ -144,6 +146,12 @@ html, body {
 #message_container {
     margin: 1%;
     padding: 1%;
+}
+.scroll {
+  height: 80%;
+  overflow-y: scroll;
+  border: solid grey;
+  border-width: 5px;
 }
 .user_info {
     font-size: 14px;
@@ -167,15 +175,19 @@ html, body {
    margin-left: 2%;
    margin-right: 5%;
    padding-left: 10px;
-   font-size: 18px;
-   font: $font-faves;
-   background-color: white;
-   color: black;
-   text-align: left;
-   border: 2px solid grey;
-   border-radius: 10px;
-   height: 25px;
 }
+.footer_container input{
+    outline: none;
+    width: 700px;
+    font-size: 18px;
+    font: $font-faves;
+    background-color: white;
+    color: black;
+    text-align: left;
+    border: 2px solid grey;
+    border-radius: 10px;
+    height: 35px;
+};
 
 // Login modal
 // Lifted from w3-schools website: https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_modal2
