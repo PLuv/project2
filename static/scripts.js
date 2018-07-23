@@ -265,7 +265,6 @@ function load_page(page_name) {
         // else construct message_container
         else {
             // remove message objects from array.
-            console.log(response);
             var reverse = response.reverse();
             reverse.forEach(reverse => {
                 document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
