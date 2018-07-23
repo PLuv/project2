@@ -109,6 +109,7 @@ function gate_function (data) {
 function create_channel() {
     document.querySelector('#create_channel').onclick = () => {
         document.querySelector('#modal_2').style.display = "block";
+        document.querySelector('#channel_name').focus();
 
         // Read form create channel (form2)
         document.querySelector('#form2').onsubmit = () => {
@@ -212,8 +213,24 @@ function channel_selector(data) {
     }
     else {
         cur_channel = localStorage.getItem('cur_channel');
-        document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
-        load_page(cur_channel);
+        let test = false;
+
+        // Test to see if localStorage cur_channel exists on server.
+        for (var i=0; i<data.channel.length; i++) {
+            if (data.channel[i] == cur_channel) {
+                test = true;
+            }
+        }
+        // if cur_channel exists on server load page, else load general.
+        if (test == true) {
+            //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+            load_page(cur_channel);
+        }
+        else {
+            cur_channel = data.channel[0];
+            //document.querySelector('#channel_name_header').innerHTML = ' #' + cur_channel;
+            load_page(cur_channel);
+        }
     }
 
     // onclick change channels and update localStorage.
@@ -236,14 +253,15 @@ function channel_selector(data) {
 
             // If not messages in class yet.
             if (response.success === false) {
-            console.log("channel load error");
-            alert("Channel is currently empty, quick be the first to comment!");
+                document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
+                alert("Channel is currently empty, quick be the first to comment!");
             }
 
             // else construct message_container
             else {
                 // remove message objects from array.
                 response.forEach(response => {
+                    document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
                     let user_content_time = (response.user + " ~ " + response.content_time);
                     let message_content = response.content;
                     let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
@@ -254,6 +272,7 @@ function channel_selector(data) {
             }
         };
         document.querySelector('#message_container').setAttribute('data-channel', page_name);
+        localStorage.setItem('cur_channel', page_name);
         request.send();
     }
 }
@@ -266,18 +285,21 @@ function post_message() {
 
     // When connected, configure
     socket.on('connect', () => {
-        document.querySelector('#submit_message_button').onclick = () => {
+            document.querySelector('#message_form').onsubmit = () => {
             var posted_message = document.querySelector('#message_input').value;
 
             // Check for proper input.
             if (posted_message.length < 1) {
                 document.querySelector('#message_input').setAttribute('placeholder', "Post must have content to be posted");
+                //return false;
             }
             else {
                 let cur_channel = document.querySelector('#message_container').getAttribute('data-channel');
                 socket.emit('submit post', {'post': posted_message, 'user': user, 'channel': cur_channel});
                 document.querySelector('#message_form').reset();
+                //return false;
             }
+            return false;
         };
     });
 }
@@ -288,10 +310,16 @@ function listen() {
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     socket.on('incoming messages', data => {
-        console.log(data.channel);
-        console.log(data.user);
-        console.log(data.content_time);
-        console.log(data.content);
+        let current_view = document.querySelector('#message_container').getAttribute('data-channel');
+
+        // Check if incoming message is applicable to user's current view.
+        if (current_view == data.channel) {
+            let user_content_time = (data.user + " ~ " + data.content_time);
+            let message_content = data.content;
+            let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
+            let new_content = template({'user_content_time': user_content_time, 'message_content': message_content});
+            document.querySelector('#message_container').innerHTML += new_content;
+        }
     });
 }
 
