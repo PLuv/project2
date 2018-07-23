@@ -19,6 +19,7 @@ if not os.getenv("SECRET_KEY"):
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
 Session(app)
 
 # Set up SECRET_KEY
@@ -114,3 +115,7 @@ def messages(page_name):
 
         return jsonify(contents)
 
+@socketio.on("submit post")
+def post(data):
+    new_content = data["post"]
+    print(new_content)

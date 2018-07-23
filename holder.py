@@ -24,10 +24,10 @@ def gate():
     "20": '</div>',\
     "21": '<!-- Begin Chat Channel Box -->',\
     "22": '<div class="col-sm-11" id="chat_channel">',\
-    "23": '<div id="message_container"></div>',\
+    "23": '<div id="message_container" data-channel="abc"></div>',\
     "24": '<!-- Footer message insert form -->',\
     "25": '<div id="footer_container">',\
-    "26": 'Test info in footer',\
+    "26": '<form id="message_form"><span class="footer_container"><input id="message_input" autocomplete="off" autofocus placeholder=" Post new messages here" type="text" maxlength="150"></span><span><button class="btn btn-primary" id="submit_message_button" type="button" value="Post Message">Post Message</button></span></form>',\
     "27": '</div>',\
     "28": '</div>',\
     "29": '</div>'}

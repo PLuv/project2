@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //End of file
 });
 
+// Push webapp to user.
 function gate_function (data) {
     document.querySelector('#problem').style.display = 'none';
     var new_html = '';
@@ -100,6 +101,7 @@ function gate_function (data) {
     create_channel();
     var from = 0;
     display_channels(from);
+    setTimeout('post_message()', 1500);
 }
 
 // Add channel function
@@ -225,11 +227,11 @@ function channel_selector(data) {
     function load_page(page_name) {
         const request = new XMLHttpRequest();
         request.open('GET', `/messages/${page_name}`);
-        // define some lists.
+        // clear what was/could be in message_container.
+        clearout();
 
         request.onload = () => {
             const response = JSON.parse(request.responseText);
-            console.log(response);
 
             // If not messages in class yet.
             if (response.success === false) {
@@ -250,6 +252,32 @@ function channel_selector(data) {
 
             }
         };
+        document.querySelector('#message_container').setAttribute('data-channel', page_name);
         request.send();
     }
+}
+
+function post_message() {
+    // Connect to websocket.
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+    // When connected, configure
+    socket.on('connect', () => {
+        document.querySelector('#submit_message_button').onclick = () => {
+            var posted_message = document.querySelector('#message_input').value;
+
+            // Check for proper input.
+            if (posted_message.length < 1) {
+                document.querySelector('#message_input').setAttribute('placeholder', "Post must have content to be posted");
+            }
+            else {
+                socket.emit('submit post', {'post': posted_message});
+                document.querySelector('#message_form').reset();
+            }
+        }
+    })
+}
+
+function clearout () {
+    document.querySelector('#message_container').innerHTML = "";
 }
