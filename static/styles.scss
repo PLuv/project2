@@ -163,8 +163,15 @@ html, body {
     font-size: 14px;
     padding-left: 3%;
 }
+.message2 {
+    font-size: 14px;
+    padding-left: 3%;
+}
 .message_box {
     width: 97%;
+    border-style: ridge;
+    background-color: #E4FFFF;
+    margin-bottom: 2px;
 }
 
 // Footer container
@@ -252,3 +259,15 @@ html, body {
 #form2 {
     @extend #form1;
 }
+
+// Delete button
+.dlt_button {
+     line-height: 12px;
+     width: 18px;
+     font-size: 8pt;
+     font-family: tahoma;
+     margin-top: 5px;
+     margin-left: 5px;
+     position:absolute;
+     z-index: 2;
+ }

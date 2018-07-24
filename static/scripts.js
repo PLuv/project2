@@ -354,15 +354,9 @@ function deletion(reverse) {
         btns[k].onclick = function(e) {
         var clicked = this.id;
         selection = reverse[clicked];
-        console.log(clicked);
-        console.log(reverse);
-        console.log(reverse[clicked]);
         var content = selection['content'];
         var user = selection['user'];
         var content_time = selection['content_time'];
-        console.log(user);
-        console.log(content_time);
-        console.log(content);
         var chan = localStorage.getItem('cur_channel');
 
         // send info to server
@@ -373,7 +367,7 @@ function deletion(reverse) {
         request.onload = () => {
             const data = JSON.parse(request.responseText);
             if (data.success) {
-                alert("message Deleted");
+                load_page(chan);
             }
             else {
                 alert("error deleting message, reload page");

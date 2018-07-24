@@ -13,8 +13,8 @@ from flask_socketio import SocketIO, emit
 app = Flask(__name__)
 
 # Check for environment variables
-if not os.getenv("SECRET_KEY"):
-    raise RuntimeError("SECRET_KEY is not set in os")
+#if not os.getenv("SECRET_KEY"):
+    #raise RuntimeError("SECRET_KEY is not set in os")
 
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
@@ -23,7 +23,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up SECRET_KEY
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+#app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 # App lists
@@ -31,7 +31,7 @@ channel_list = ['General']
 user_list = []
 channel_dict = {}
 
-# Testing
+# Testing and Start up content.
 message_1 = Message(user='Philip', content_time='07-21-18', content='This is my first test message -phil')
 message_2 = Message(user='Oliver', content_time='07-22-18', content='And this is my first test message -oliver')
 message_3 = Message(user='Natasha', content_time='07-22-18', content='Hi Guys.  -natasha')
