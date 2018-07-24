@@ -264,23 +264,35 @@ function load_page(page_name) {
 
         // else construct message_container
         else {
+            document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
             // remove message objects from array.
             var reverse = response.reverse();
+            console.log(reverse);
+            var i = 0;
+            var logged_user = localStorage.getItem('username');
             reverse.forEach(reverse => {
-                document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
                 let user_content_time = (reverse.user + " ~ " + reverse.content_time);
                 let message_content = reverse.content;
+                let user = reverse.user;
                 let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
-                let content = template({'user_content_time': user_content_time, 'message_content': message_content});
+                let content = template({'user_content_time': user_content_time, 'message_content': message_content, 'user': user, 'number': i});
                 document.querySelector('#message_container').innerHTML += content;
+                // Add deletion option.
+                if (user == logged_user) {
+                    let delete_template = Handlebars.compile(document.querySelector('#deletion').innerHTML);
+                    let delete_option = delete_template({'number': i});
+                    document.querySelector("[id=" + CSS.escape(i) + "]").insertAdjacentHTML('afterbegin', delete_option);
+                }
+                i++;
             });
-
         }
     };
+
     document.querySelector('#message_container').setAttribute('data-channel', page_name);
     localStorage.setItem('cur_channel', page_name);
     request.send();
 }
+
 
 function post_message() {
     const user = localStorage.getItem('username');
