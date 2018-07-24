@@ -36,6 +36,13 @@
             <div><input class="dlt_button" type="button" value="X" id="{{ number }}"></div>
         </script>
         {%- endraw %}
+        {% raw -%}
+        <script id="message_script2" type="text/x-handlebars-template">
+            <div class="row" id="{{ number }}"><div><input class="dlt_button" type="button" value="X" id="{{ number }}"></div><div class="message_box">
+            <div class="user_info"><p class="user_info">{{ user_content_time }}</p></div>
+            <div class="message"><p class="message">{{ message_content }}</p></div></div></div>
+        </script>
+        {%- endraw %}
         <script src="{{url_for('static', filename='scripts.js')}}"></script>
 
         <!-- Add Favicon -->

@@ -325,6 +325,7 @@ function post_message() {
 function listen() {
     // Connect to websocket.
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    var j = 1000;
 
     socket.on('incoming messages', data => {
         let current_view = document.querySelector('#message_container').getAttribute('data-channel');
@@ -333,10 +334,11 @@ function listen() {
         if (current_view == data.channel) {
             let user_content_time = (data.user + " ~ " + data.content_time);
             let message_content = data.content;
-            let template = Handlebars.compile(document.querySelector('#message_script').innerHTML);
-            let new_content = template({'user_content_time': user_content_time, 'message_content': message_content});
+            let template = Handlebars.compile(document.querySelector('#message_script2').innerHTML);
+            let new_content = template({'user_content_time': user_content_time, 'message_content': message_content, 'number': j});
             // insert before
             document.querySelector('#message_container').insertAdjacentHTML('afterbegin', new_content);
+            j++;
         }
     });
 }
