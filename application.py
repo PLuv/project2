@@ -115,6 +115,22 @@ def messages(page_name):
 
         return jsonify(contents)
 
+
+@app.route("/deletion", methods=["POST"])
+def deletion():
+    """Delete a post"""
+    user = request.form.get("username")
+    content_time = request.form.get("content_time")
+    content = request.form.get("content")
+    channel = request.form.get("channel")
+
+    channel_object = channel_dict[channel]
+
+    result = channel_object.dlt_message(content)
+
+    return jsonify({"success": True})
+
+
 @socketio.on("submit post")
 def post(data):
     new_content, cur_user, cur_channel = data["post"], data["user"], data["channel"]

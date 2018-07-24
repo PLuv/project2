@@ -70,6 +70,14 @@ class Channel:
             message_dict.append({'user': message_user, 'content_time': message_content_time, 'content': message_content})
         return (message_dict)
 
+    # Delete message
+    def dlt_message(self, data):
+        i = 0;
+        for mess in self.messages:
+            if mess.content == data:
+                self.messages.pop(i)
+            i += 1;
+
     # define user returner
     def get_users(self):
         users = []

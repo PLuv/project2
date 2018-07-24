@@ -267,7 +267,6 @@ function load_page(page_name) {
             document.querySelector('#channel_name_header').innerHTML = ' #' + page_name;
             // remove message objects from array.
             var reverse = response.reverse();
-            console.log(reverse);
             var i = 0;
             var logged_user = localStorage.getItem('username');
             reverse.forEach(reverse => {
@@ -285,6 +284,7 @@ function load_page(page_name) {
                 }
                 i++;
             });
+            deletion(reverse);
         }
     };
 
@@ -308,13 +308,11 @@ function post_message() {
             // Check for proper input.
             if (posted_message.length < 1) {
                 document.querySelector('#message_input').setAttribute('placeholder', "Post must have content to be posted");
-                //return false;
             }
             else {
                 let cur_channel = document.querySelector('#message_container').getAttribute('data-channel');
                 socket.emit('submit post', {'post': posted_message, 'user': user, 'channel': cur_channel});
                 document.querySelector('#message_form').reset();
-                //return false;
             }
             return false;
         };
@@ -345,4 +343,51 @@ function listen() {
 
 function clearout () {
     document.querySelector('#message_container').innerHTML = "";
+}
+
+function deletion(reverse) {
+    var btns = document.querySelectorAll('.dlt_button');
+    btns_length = btns.length;
+    var selection;
+
+    for (var k = 0; k < btns_length; k++) {
+        btns[k].onclick = function(e) {
+        var clicked = this.id;
+        selection = reverse[clicked];
+        console.log(clicked);
+        console.log(reverse);
+        console.log(reverse[clicked]);
+        var content = selection['content'];
+        var user = selection['user'];
+        var content_time = selection['content_time'];
+        console.log(user);
+        console.log(content_time);
+        console.log(content);
+        var chan = localStorage.getItem('cur_channel');
+
+        // send info to server
+        const request = new XMLHttpRequest();
+        request.open('POST', '/deletion');
+
+        // Callback function.
+        request.onload = () => {
+            const data = JSON.parse(request.responseText);
+            if (data.success) {
+                alert("message Deleted");
+            }
+            else {
+                alert("error deleting message, reload page");
+            }
+        };
+        // Add data to send
+        const data = new FormData();
+        data.append('username', user);
+        data.append('content_time', content_time);
+        data.append('content', content);
+        data.append('channel', chan);
+
+        request.send(data);
+        return false;
+    };
+    }
 }
